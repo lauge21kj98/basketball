@@ -13,50 +13,88 @@ def draw_court(
     line_color: sv.Color = sv.Color.WHITE,
     padding: int = 50,
     line_thickness: int = 4,
-    scale: float = 0.1
+    hoop_radius: int = 6,
+    point_radius: int = 5,
+    scale: float = 10.0,
+    show_labels: bool = False
 ) -> np.ndarray:
+    """
+    Draw basketball court using BasketballCourtConfiguration.
+    """
+
     scaled_width = int(config.width * scale)
     scaled_length = int(config.length * scale)
-    scaled_circle_radius = int(config.center_circle_radius * scale)
 
-    court_image = np.ones(
+    court = np.ones(
         (scaled_width + 2 * padding,
          scaled_length + 2 * padding, 3),
         dtype=np.uint8
     ) * np.array(background_color.as_bgr(), dtype=np.uint8)
 
-    # Draw court lines from topology
+    # Draw edges
     for start, end in config.edges:
-        p1 = config.vertices[start - 1]
-        p2 = config.vertices[end - 1]
 
-        pt1 = (int(p1[0] * scale) + padding,
-               int(p1[1] * scale) + padding)
-        pt2 = (int(p2[0] * scale) + padding,
-               int(p2[1] * scale) + padding)
+        p1 = (
+            int(config.vertices[start - 1][0] * scale) + padding,
+            int(config.vertices[start - 1][1] * scale) + padding
+        )
+
+        p2 = (
+            int(config.vertices[end - 1][0] * scale) + padding,
+            int(config.vertices[end - 1][1] * scale) + padding
+        )
 
         cv2.line(
-            court_image,
-            pt1,
-            pt2,
+            court,
+            p1,
+            p2,
             line_color.as_bgr(),
             line_thickness
         )
 
-    # Center circle
-    center = (
-        scaled_length // 2 + padding,
-        scaled_width // 2 + padding
+    # Draw hoops
+    left_hoop = (
+        int(config.vertices[31][0] * scale) + padding,
+        int(config.vertices[31][1] * scale) + padding
     )
+
+    right_hoop = (
+        int(config.vertices[32][0] * scale) + padding,
+        int(config.vertices[32][1] * scale) + padding
+    )
+
     cv2.circle(
-        court_image,
-        center,
-        scaled_circle_radius,
+        court,
+        left_hoop,
+        hoop_radius,
         line_color.as_bgr(),
         line_thickness
     )
 
-    return court_image
+    cv2.circle(
+        court,
+        right_hoop,
+        hoop_radius,
+        line_color.as_bgr(),
+        line_thickness
+    )
+
+    # Center point
+    center = (
+        int(config.vertices[10][0] * scale) + padding,
+        int(config.vertices[10][1] * scale) + padding
+    )
+
+    cv2.circle(
+        court,
+        center,
+        point_radius,
+        line_color.as_bgr(),
+        -1
+    )
+
+    return court
+
 
 def draw_points_on_court(
     config: BasketballCourtConfiguration,
