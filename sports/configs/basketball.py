@@ -95,6 +95,11 @@ class BasketballCourtConfiguration:
         (6, 7), (7, 8), (8, 9), (9, 10),
         # Center line
         (3, 11), (11, 8),
+        # Court outline LEFT
+        (1, 12), (12, 22), (22, 26), (26, 16), (16, 10),
+        
+        # Court outline RIGHT
+        (5, 17), (17, 27), (27, 31), (31, 21), (21, 6),
         
         # Left 3pt arc
         (12, 13), (13, 14), (14, 15), (15, 16),
