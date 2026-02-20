@@ -29,89 +29,77 @@ class BasketballCourtConfiguration:
         tpll = self.three_point_line_length
 
         return [
-            # Court outline
-            # Top (left to right)
-            (0, 0),                # 1 left top corner of the court
-            (tpd, 0),              # 2 halfway between baseline and middle top side LEFT
-            (l / 2, 0),            # 3 Top middle of court
-            (l - tpd, 0),          # 4 halfway between baseline and middle top side RIGHT
-            (l, 0),                # 5 Right top corner of the court
-            
-            # Bottom (right to left)
-            (l, w),                # 6 right bottom corner of the court
-            (l - tpd, w),          # 7 halfway between baseline and middle bottom side RIGHT
-            (l / 2, w),            # 8 Bottom middle of court
-            (tpd, w),              # 9 halfway between baseline and middle bottom side LEFT
-            (0, w),                # 10 left bottom corner of the court
-            
-            
-            # Center dot
-            (l / 2, w / 2),        # 11 center of the court
+            # See my diagram for the numbering of vertices. 
+            # But it goes from top left then down. Go right once, then down.
 
-            # 3pt arc markers LEFT SIDE
-            (0, tpm),             # 12 top corner of the arc sideline LEFT
-            (tpll, tpm),          # 13 top corner of the arc away from baseline and sideline LEFT
-            (tpd, w / 2),         # 14 top of the arc LEFT
-            (tpll, w - tpm),      # 15 bottom corner of the arc away from baseline and sideline LEFT
-            (0, w - tpm),         # 16 bottom corner of the arc sideline LEFT
+            # Left baseline.
+            (0, 0),                # 1 top left.
+            (0, tpm),              # 2 top left arc.
+            (0, (w - kw) / 2),     # 3 top left key.                
+            (0, (w + kw) / 2),     # 4 bottom left key.
+            (0, w - tpm),          # 5 bottom left arc.
+            (0, w),                # 6 bottom left
 
+            # Left hoop
+            (hd, w / 2),           # 7 left hoop.
 
-            # 3pt arc markers RIGHT SIDE
-            (l, tpm),             # 17 top corner of the arc sideline RIGHT
-            (l - tpll, tpm),      # 18 top corner of the arc away from baseline and sideline RIGHT
-            (l - tpd, w / 2),     # 19 top of the arc RIGHT
-            (l - tpll, w - tpm),  # 20 bottom corner of the arc away from baseline and sideline RIGHT
-            (l, w - tpm),         # 21 bottom corner of the arc sideline RIGHT
+            # Left 3pt arc
+            (tpll, tpm),          # 8 top left arc.
+            (tpll, w - tpm),      # 9 bottom left arc.
 
-            
-            # Left key (paint)
-            (0, (w - kw) / 2),                     # 22 top left corner of the key
-            (kl, (w - kw) / 2),                    # 23 top right corner of the key
-            (kl, w / 2),                           # 24 ft line center of the key
-            (kl, (w + kw) / 2),                    # 25 bottom right corner of the key
-            (0, (w + kw) / 2),                     # 26 bottom left corner of the key
-            
-            
-            # Right key (paint)
-            (l, (w - kw) / 2),                         # 27 top right corner of the key
-            (l - kl, (w - kw) / 2),                    # 28 top left corner of the key
-            (l - kl, w / 2),                           # 29 ft line center of the key
-            (l - kl, (w + kw) / 2),                    # 30 bottom left corner of the key
-            (l, (w + kw) / 2),                         # 31 bottom right corner of the key
-            
-            
-            
+            # Left ft. line
+            (kl, (w - kw) / 2),   # 10 top right corner of the key
+            (kl, w / 2),          # 11 ft line center of the key
+            (kl, (w + kw) / 2),   # 12 bottom right corner of the key
 
-            # Hoops
-            (hd, w / 2),                             # 32 left hoop
-            (l - hd, w / 2),                         # 33 right hoop
+            # Left court sideline and 3pt top center
+            (tpd, 0),             # 13 halfway between baseline and middle top side
+            (tpd, w / 2),         # 14 top of the 3pt arc center
+            (tpd, w),             # 15 halfway between baseline and middle bottom side
 
+            # Middle of the court
+            (l / 2, 0),            # 16 Top middle of court
+            (l / 2, w / 2),        # 17 center of the court
+            (l / 2, w),            # 18 Bottom middle of court
+            
+            # Right court sideline and 3pt top center
+            (l - tpd, 0),          # 19 halfway between baseline and middle top side
+            (l - tpd, w / 2),      # 20 top of the 3pt arc center
+            (l - tpd, w),          # 21 halfway between baseline and middle bottom side
+            
+            # Right ft. line
+            (l - kl, (w - kw) / 2),     # 22 top left corner of the key
+            (l - kl, w / 2),            # 23 ft line center of the key
+            (l - kl, (w + kw) / 2),     # 24 bottom left corner of the key
+            
+            # Right 3pt arc
+            (l - tpll, tpm),      # 25 top corner of the arc away from baseline and sideline
+            (l - tpll, w - tpm),  # 26 bottom corner of the arc away from baseline and sideline RIGHT
+
+            # Right hoop
+            (l - hd, w / 2),      # 27 right hoop
+
+            # Right baseline
+            (l, 0),                # 28 Right top corner of the court
+            (l, tpm),              # 29 top corner of the arc sideline
+            (l, (w - kw) / 2),     # 30 top right corner of the key
+            (l, (w + kw) / 2),     # 31 bottom right corner of the key
+            (l, w - tpm),          # 32 bottom corner of the arc sideline 
+            (l, w),                # 33 right bottom corner of the court
         ]
 
     edges: List[Tuple[int, int]] = field(default_factory=lambda: [
-        # Court outline TOP
-        (1, 2), (2, 3), (3, 4), (4, 5),
-        # Court outline BOTTOM
-        (6, 7), (7, 8), (8, 9), (9, 10),
-        # Center line
-        (3, 11), (11, 8),
-        # Court outline LEFT
-        (1, 12), (12, 22), (22, 26), (26, 16), (16, 10),
+        (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), # Left baseline
+        (1, 13), (13, 16), (16, 19), (19, 28), # Top sideline
+        (6, 15), (15, 18), (18, 21), (21, 33), # Bottom sideline
+        (28, 29), (29, 30), (30, 31), (31, 32), (32, 33), # Right baseline
+        (16, 17), (17, 18), # Middle line
         
-        # Court outline RIGHT
-        (5, 17), (17, 27), (27, 31), (31, 21), (21, 6),
+        (2, 8), (8, 14), (14, 9), (9, 5), # Left 3pt arc
+        (3, 10), (10, 11), (11, 12), (12, 4), # Left key
         
-        # Left 3pt arc
-        (12, 13), (13, 14), (14, 15), (15, 16),
-
-        # Right 3pt arc
-        (17, 18), (18, 19), (19, 20), (20, 21),
-
-        # Left key
-        (22, 23), (23, 24), (24, 25), (25, 26), (26, 22),
-
-        # Right key
-        (27, 28), (28, 29), (29, 30), (30, 31), (31, 27),
+        (29, 25), (25, 20), (20, 26), (26, 32), # Right 3pt arc
+        (30, 22), (22, 23), (23, 24), (24, 31) # Right key
     ])
 
     labels: List[str] = field(default_factory=lambda: [
@@ -122,7 +110,7 @@ class BasketballCourtConfiguration:
         "17", "18", "19", "20", "21",
         "22", "23", "24", "25", "26",
         "27", "28", "29", "30", "31",
-        "32"
+        "32", "33"
     ])
 
     colors: List[str] = field(default_factory=lambda: [
