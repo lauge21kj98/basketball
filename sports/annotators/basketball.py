@@ -54,13 +54,13 @@ def draw_court(
 
     # Draw hoops
     left_hoop = (
-        int(config.vertices[31][0] * scale) + padding,
-        int(config.vertices[31][1] * scale) + padding
+        int(config.vertices[6][0] * scale) + padding,
+        int(config.vertices[6][1] * scale) + padding
     )
 
     right_hoop = (
-        int(config.vertices[32][0] * scale) + padding,
-        int(config.vertices[32][1] * scale) + padding
+        int(config.vertices[26][0] * scale) + padding,
+        int(config.vertices[26][1] * scale) + padding
     )
 
     cv2.circle(
@@ -81,8 +81,8 @@ def draw_court(
 
     # Center point
     center = (
-        int(config.vertices[10][0] * scale) + padding,
-        int(config.vertices[10][1] * scale) + padding
+        int(config.vertices[16][0] * scale) + padding,
+        int(config.vertices[16][1] * scale) + padding
     )
 
     cv2.circle(
