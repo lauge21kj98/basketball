@@ -7,7 +7,6 @@ import umap
 from sklearn.cluster import KMeans
 from tqdm import tqdm
 from transformers import AutoProcessor, SiglipVisionModel
-from more_itertools import chunked
 
 V = TypeVar("V")
 
@@ -72,8 +71,7 @@ class TeamClassifier:
             np.ndarray: Extracted features as a numpy array.
         """
         crops = [sv.cv2_to_pillow(crop) for crop in crops]
-        #batches = create_batches(crops, self.batch_size)
-        batches = chunked(crops, self.batch_size)
+        batches = create_batches(crops, self.batch_size)
         data = []
         with torch.no_grad():
             for batch in tqdm(batches, desc='Embedding extraction'):

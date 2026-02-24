@@ -104,7 +104,7 @@ def draw_points_on_court(
     radius: int = 10,
     thickness: int = 2,
     padding: int = 50,
-    scale: float = 0.1,
+    scale: float = 10,
     court: Optional[np.ndarray] = None
 ) -> np.ndarray:
     if court is None:
@@ -130,7 +130,7 @@ def draw_paths_on_court(
     color: sv.Color = sv.Color.WHITE,
     thickness: int = 2,
     padding: int = 50,
-    scale: float = 0.1,
+    scale: float = 10,
     court: Optional[np.ndarray] = None
 ) -> np.ndarray:
     if court is None:
@@ -169,7 +169,7 @@ def draw_court_voronoi_diagram(
     team_2_color: sv.Color = sv.Color.BLUE,
     opacity: float = 0.5,
     padding: int = 50,
-    scale: float = 0.1,
+    scale: float = 10,
     court: Optional[np.ndarray] = None
 ) -> np.ndarray:
     if court is None:
